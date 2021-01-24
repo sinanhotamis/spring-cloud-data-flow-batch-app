@@ -20,6 +20,7 @@
 * Copy Input and Output files on project directory into Local Mounting directory with SCDF.(Normally File is sourced on SFTP,FTP, or other platform, but locally is enough.)    
 * Launch app on Tasks menu
 * View Task Execution and Job Execution info
+* Besides above task deployment actions, you can import file 'tasks-export_2021-01-133506.json' on /installation directory into SCDF.
 
 # Running on Local Terminal
 
