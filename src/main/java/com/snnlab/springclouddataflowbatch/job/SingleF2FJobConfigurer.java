@@ -8,8 +8,6 @@ import com.snnlab.springclouddataflowbatch.step.chunk.SingleF2FJobItemWriter;
 import com.snnlab.springclouddataflowbatch.step.tasklet.SingleF2FJobTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +29,9 @@ public class SingleF2FJobConfigurer extends BaseJobConfigurer {
 
     private Step firstChunkOrientedStep(SingleF2FJobConfigInfo singleF2FJobConfigInfo) throws MalformedURLException {
          return  stepBuilderFactory.get("firstChunkOrientedStep")
-                .<SnnLabInfoDTO, SnnLabInfoDTO>chunk(3)
-                .reader(firstChunkOrientedStepReader(singleF2FJobConfigInfo))
-                .writer(firstChunkOrientedStepWriter(singleF2FJobConfigInfo))
+                .<SnnLabInfoDTO, SnnLabInfoDTO>chunk(singleF2FJobConfigInfo.getChunkSize())
+                .reader(new SingleF2FJobItemReader(singleF2FJobConfigInfo.getResourcePath()))
+                .writer(new SingleF2FJobItemWriter(singleF2FJobConfigInfo.getResourcePath()))
                 .build();
     }
 
@@ -41,14 +39,6 @@ public class SingleF2FJobConfigurer extends BaseJobConfigurer {
         return stepBuilderFactory.get("taskletStep")
                 .tasklet(new SingleF2FJobTasklet())
                 .build();
-    }
-
-    private ItemReader<SnnLabInfoDTO> firstChunkOrientedStepReader(SingleF2FJobConfigInfo singleF2FJobConfigInfo) throws MalformedURLException {
-        return new SingleF2FJobItemReader(singleF2FJobConfigInfo.getResourcePath());
-    }
-
-    private ItemWriter firstChunkOrientedStepWriter(SingleF2FJobConfigInfo singleF2FJobConfigInfo) throws MalformedURLException {
-        return new SingleF2FJobItemWriter(singleF2FJobConfigInfo.getResourcePath());
     }
 }
 

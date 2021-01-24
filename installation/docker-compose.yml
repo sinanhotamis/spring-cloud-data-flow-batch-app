@@ -11,7 +11,6 @@ version: '3'
 #   must supersede the local deployer's PORTRANGE_LOW and PORTRANGE_HIGH - the ports assigned to the stream apps run inside the Skipper container.
 #   The stream apps tha run in their own docker containers must set [DOCKER_PORTRANGE_LOW, DOCKER_PORTRANGE_HIGH] range that
 #   doesn't overlap with the APPS_PORT_RANGE.
-#
 # Exposed container ports:
 # - 9393:9393               - Data Flow server port (http://localhost:9393/dashboard)
 # - 7577:7577               - Skipper server port (http://localhost:7577/api)
